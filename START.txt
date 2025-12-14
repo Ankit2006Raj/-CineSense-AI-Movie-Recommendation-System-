@@ -1,0 +1,53 @@
+================================================================================
+                    🎬 CINESENSE AI - QUICK START
+================================================================================
+
+STEP 1: Install Dependencies
+   → pip install -r requirements.txt
+
+STEP 2: Run the Application
+   → python app.py
+
+STEP 3: Open Browser
+   → Go to http://localhost:5000
+
+STEP 4: Clear Cache (First Time Only)
+   → Press Ctrl + Shift + R in browser
+
+================================================================================
+                        ✅ WHAT'S INCLUDED
+================================================================================
+
+✅ 136 Movies - All with real TMDB posters
+✅ 12 Mood Categories - Happy, Sad, Romantic, Thriller, etc.
+✅ AI Recommendations - Personalized suggestions
+✅ User Ratings - Rate movies 1-10
+✅ Sentiment Analysis - Review analysis
+✅ Search & Filter - Find movies easily
+
+================================================================================
+                        📁 PROJECT FILES
+================================================================================
+
+Core Files:
+  - app.py                    Main Flask application
+  - models.py                 Database models
+  - recommendation_engine.py  AI recommendation system
+  - sentiment_analyzer.py     Review sentiment analysis
+  - mood_mapper.py            Mood-to-genre mapping
+  - tmdb_integration.py       TMDB API integration
+  - config.py                 Configuration
+
+Frontend:
+  - templates/index.html      Main page
+  - static/css/style.css      Styles
+  - static/js/app.js          JavaScript
+
+Database:
+  - instance/cinesense.db     SQLite database (136 movies)
+
+================================================================================
+
+For more details, see README.md
+
+================================================================================

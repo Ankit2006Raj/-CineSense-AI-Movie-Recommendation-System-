@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSense AI - Intelligent Movie Recommendations</title>
+    <meta name="description" content="AI-powered movie recommendations tailored to your mood and preferences">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.0">
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <div class="brand-logo">
+                    <i class="fas fa-film"></i>
+                </div>
+                <span class="brand-text">CineSense<span class="brand-ai">AI</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#trending">Trending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mood">Mood Picker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recommendations">For You</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <div id="authSection">
+                        <button class="btn btn-ghost" onclick="showAuthModal('login')">
+                            Login
+                        </button>
+                        <button class="btn btn-primary-gradient" onclick="showAuthModal('signup')">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="d-none" id="userSection">
+                        <div class="dropdown">
+                            <button class="btn btn-user dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span id="usernameDisplay" class="d-none d-md-inline"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+                                <li><a class="dropdown-item" href="#" onclick="showPreferences()">
+                                        <i class="fas fa-sliders-h me-2"></i>Preferences
+                                    </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="showWatchHistory()">
+                                        <i class="fas fa-history me-2"></i>Watch History
+                                    </a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-pattern"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-10 col-xl-8 mx-auto text-center">
+                    <div class="hero-badge" data-aos="fade-down">
+                        <i class="fas fa-sparkles me-2"></i>
+                        <span>AI-Powered Recommendations</span>
+                    </div>
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                        Discover Your Next
+                        <span class="gradient-text">Favorite Movie</span>
+                    </h1>
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                        Personalized recommendations powered by advanced machine learning,
+                        tailored to your mood, preferences, and viewing history
+                    </p>
+                    <div class="search-wrapper" data-aos="fade-up" data-aos-delay="300">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="searchInput" class="search-input"
+                                placeholder="Search thousands of movies...">
+                            <button class="search-btn" onclick="searchMovies()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
+                        <button class="btn btn-primary-gradient btn-lg" onclick="scrollToSection('recommendations')">
+                            <i class="fas fa-magic me-2"></i>Get Recommendations
+                        </button>
+                        <button class="btn btn-outline-white btn-lg" onclick="scrollToSection('mood')">
+                            <i class="fas fa-smile me-2"></i>Mood Picker
+                        </button>
+                    </div>
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
+                        <div class="stat-item">
+                            <div class="stat-value">10K+</div>
+                            <div class="stat-label">Movies</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-value">AI</div>
+                            <div class="stat-label">Powered</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToSection('trending')">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="feature-title">AI-Powered</h5>
+                        <p class="feature-desc">Advanced machine learning algorithms analyze your preferences</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h5 class="feature-title">Mood-Based</h5>
+                        <p class="feature-desc">Get recommendations that match your current emotional state</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h5 class="feature-title">Real-Time</h5>
+                        <p class="feature-desc">Instant personalization based on your viewing patterns</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h5 class="feature-title">Explainable</h5>
+                        <p class="feature-desc">Understand why each movie is recommended to you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mood Picker Section -->
+    <section id="mood">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">
+                    <i class="fas fa-palette me-2"></i>How Are You Feeling Today?
+                </h2>
+                <p class="section-subtitle">
+                    Select your current mood and get personalized movie recommendations
+                </p>
+            </div>
+            <div class="row g-4" id="moodGrid">
+                <!-- Mood cards will be dynamically loaded -->
+            </div>
+            <div id="moodRecommendations" class="mt-5"></div>
+        </div>
+    </section>
+
+    <!-- Trending Section -->
+    <section id="trending" class="trending-section">
+        <div class="trending-background">
+            <div class="trending-glow trending-glow-1"></div>
+            <div class="trending-glow trending-glow-2"></div>
+        </div>
+        <div class="container">
+            <div class="trending-header" data-aos="fade-up">
+                <div class="trending-header-content">
+                    <div class="trending-badge">
+                        <i class="fas fa-fire"></i>
+                        <span>Hot Right Now</span>
+                    </div>
+                    <h2 class="trending-title">
+                        Trending Now
+                    </h2>
+                    <p class="trending-subtitle">
+                        Discover what everyone's watching this week
+                    </p>
+                </div>
+                <div class="trending-filters" data-aos="fade-up" data-aos-delay="100">
+                    <button class="trending-filter-btn active" onclick="loadTrending(7)" data-period="week">
+                        <i class="fas fa-calendar-week"></i>
+                        <span>This Week</span>
+                    </button>
+                    <button class="trending-filter-btn" onclick="loadTrending(30)" data-period="month">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>This Month</span>
+                    </button>
+                    <button class="trending-filter-btn" onclick="loadTrending(365)" data-period="year">
+                        <i class="fas fa-calendar"></i>
+                        <span>This Year</span>
+                    </button>
+                </div>
+            </div>
+            <div id="trendingMovies" class="trending-grid">
+                <!-- Trending movies will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">
+                    <i class="fas fa-sparkles me-2"></i>Personalized For You
+                </h2>
+                <p class="section-subtitle">
+                    AI-curated recommendations based on your unique taste
+                </p>
+            </div>
+            <div id="recommendationsContainer">
+                <div class="text-center py-5" data-aos="fade-up">
+                    <div
+                        style="width: 80px; height: 80px; background: rgba(102, 126, 234, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-user-lock" style="font-size: 2rem; color: #667eea;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 1rem;">Sign in to unlock personalized recommendations</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Create an account to get AI-powered
+                        movie suggestions tailored just for you</p>
+                    <button class="btn btn-primary-gradient btn-lg" onclick="showAuthModal('login')">
+                        <i class="fas fa-sign-in-alt me-2"></i>Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalTitle">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm">
+                        <div id="signupFields" class="d-none">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-user me-2"></i>Username
+                                </label>
+                                <input type="text" class="form-control" id="username" placeholder="Choose a username"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-envelope me-2"></i>Email
+                            </label>
+                            <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-lock me-2"></i>Password
+                            </label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary-gradient w-100 btn-lg mt-3">
+                            <span id="authButtonText">Login</span>
+                        </button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <a href="#" id="authToggle" style="color: #a78bfa; text-decoration: none; font-weight: 500;">
+                            Don't have an account? Sign up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Movie Detail Modal -->
+    <div class="modal fade" id="movieModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0" id="movieModalBody">
+                    <!-- Movie details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preferences Modal -->
+    <div class="modal fade" id="preferencesModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-sliders-h me-2"></i>Your Preferences
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="preferencesForm">
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-film me-2"></i>Favorite Genres
+                            </label>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                                Select your preferred movie genres
+                            </p>
+                            <div id="genreCheckboxes" class="d-flex flex-wrap gap-2">
+                                <!-- Genre checkboxes will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-language me-2"></i>Preferred Languages
+                            </label>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                                Choose languages you'd like to watch movies in
+                            </p>
+                            <div id="languageCheckboxes" class="d-flex flex-wrap gap-2">
+                                <!-- Language checkboxes will be loaded here -->
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary-gradient w-100 btn-lg">
+                            <i class="fas fa-save me-2"></i>Save Preferences
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="modern-footer">
+        <div class="footer-glow"></div>
+        <div class="container">
+            <div class="row g-5">
+                <!-- Brand Section -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="footer-brand">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="brand-logo" style="width: 48px; height: 48px; font-size: 1.5rem;">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div>
+                                <h3 class="mb-0 fw-bold">CineSense<span class="brand-ai">AI</span></h3>
+                                <p class="mb-0 text-muted" style="font-size: 0.85rem;">Smart Movie Discovery</p>
+                            </div>
+                        </div>
+                        <p class="footer-description">
+                            Experience the future of movie recommendations powered by advanced AI and machine learning.
+                            Discover your next favorite film tailored to your unique taste.
+                        </p>
+                        <div class="footer-badges">
+                            <span class="footer-badge">
+                                <i class="fas fa-brain me-1"></i>AI Powered
+                            </span>
+                            <span class="footer-badge">
+                                <i class="fas fa-shield-alt me-1"></i>Secure
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="footer-heading">Explore</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i>Home</a></li>
+                        <li><a href="#trending"><i class="fas fa-chevron-right"></i>Trending</a></li>
+                        <li><a href="#mood"><i class="fas fa-chevron-right"></i>Mood Picker</a></li>
+                        <li><a href="#recommendations"><i class="fas fa-chevron-right"></i>For You</a></li>
+                    </ul>
+                </div>
+
+                <!-- Features -->
+                <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="footer-heading">Features</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i>AI Recommendations</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i>Mood Analysis</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i>Sentiment Insights</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i>Watch History</a></li>
+                    </ul>
+                </div>
+
+                <!-- Connect -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="footer-heading">Connect With Developer</h5>
+                    <p class="footer-description mb-3">
+                        Built with passion by Ankit Raj. Let's connect and collaborate!
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
+                            class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
+                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                    <div class="footer-contact">
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-email">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            ankit9905163014@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0">
+                            &copy; 2025 <strong>CineSense AI</strong>. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0">
+                            Powered by <span class="tech-badge">Machine Learning</span> &
+                            <span class="tech-badge">NLP</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}?v=2.0"></script>
+</body>
+
+</html>
