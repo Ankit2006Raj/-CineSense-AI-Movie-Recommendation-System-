@@ -144,21 +144,6 @@ Uses NLTK to analyze review text and extract emotional sentiment, enhancing reco
 - **watch_history** - Viewing history tracking
 - **user_preferences** - Genre and language preferences
 
-## 🔌 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | Home page |
-| POST | `/signup` | Create new account |
-| POST | `/login` | User authentication |
-| POST | `/logout` | User logout |
-| GET | `/api/movies/<id>` | Get movie details |
-| POST | `/api/rate` | Submit movie rating |
-| GET | `/api/recommendations` | Get personalized recommendations |
-| POST | `/api/recommendations/mood` | Get mood-based recommendations |
-| GET | `/api/recommendations/trending` | Get trending movies |
-| GET | `/api/search` | Search movies |
-
 ## 🎨 Customization
 
 ### Adding New Movies
@@ -206,3 +191,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ⭐ Star this repo if you find it helpful!
 
 </div>
+
