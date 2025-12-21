@@ -19,6 +19,9 @@
 MoodMatch Cinema is an intelligent movie recommendation system that leverages AI and sentiment analysis to suggest movies based on your current mood. Built with Flask and modern machine learning algorithms, it provides personalized movie recommendations tailored to your emotional state.
 
 The system combines collaborative filtering, content-based filtering, and sentiment analysis to deliver accurate recommendations. Whether you're feeling happy, sad, adventurous, or thoughtful, MoodMatch analyzes your mood and suggests the perfect movie to match your emotional state.
+<img width="1364" height="639" alt="image" src="https://github.com/user-attachments/assets/7833c93a-8348-47dd-8493-86f464e7d95b" />
+<img width="1322" height="627" alt="image" src="https://github.com/user-attachments/assets/382a85d0-06dc-4852-86cf-813e1162e742" />
+
 
 ## ✨ Key Features
 
@@ -191,4 +194,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ⭐ Star this repo if you find it helpful!
 
 </div>
+
 
